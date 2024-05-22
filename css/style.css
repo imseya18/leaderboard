@@ -1,0 +1,165 @@
+body {
+    background-color: #2a2a2a;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.match{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 400px;
+}
+.match-module {
+    background-color: #1c1c1e;
+    border-radius: 15px;
+    padding: 20px 40px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: #ffffff;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.team {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 53px;
+    background: red;
+    justify-content: space-between;
+    max-width: 70px;
+    min-width: 70px;
+}
+
+.silkscreen-regular {
+  font-family: "Silkscreen", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.press-start-2p-regular {
+  font-family: "Press Start 2P", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.eth-logo{
+  width: 30px;
+  height: 30px;
+}
+
+.logo{
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+.team-logo {
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    #margin-right: 10px;
+}
+
+.team-name {
+    font-size: 18px;
+}
+
+.team-score {
+
+    font-size: 24px;
+}
+
+.match-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.score {
+    font-size: 22px;
+    margin-bottom: 5px;
+}
+
+.time {
+    color: #00ff00;
+}
+
+.possession {
+    text-align: center;
+}
+
+.possession-bar {
+    display: flex;
+    width: 100%;
+    height: 10px;
+    background-color: #3a3a3c;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+.possession-left {
+    background-color: #00ff00;
+    height: 100%;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.possession-right {
+    background-color: #ffcc00;
+    height: 100%;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.possession-text {
+    font-size: 12px;
+    margin-bottom: 5px;
+}
+
+.possession-percent {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    font-size: 14px;
+}
+
+.percent-left {
+    color: #00ff00;
+}
+
+.percent-right {
+    color: #ffcc00;
+}
+
+.events {
+    width: 100%;
+}
+
+.event {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.event-time {
+    width: 30px;
+    font-size: 14px;
+}
+
+.event-player {
+    flex-grow: 1;
+    font-size: 14px;
+}
+
+.event-icon {
+    width: 20px;
+    height: 20px;
+    background-color: #ffcc00;
+    border-radius: 50%;
+}
