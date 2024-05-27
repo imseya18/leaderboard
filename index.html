@@ -39,6 +39,38 @@ class Leaderboard {
         return element;
     }
 
+    #createTeamDiv(image_player, pseudo_player, teamSide)
+    {
+        const teamImg = this.#createElement("img", {
+            src: image_player,
+            alt: pseudo_player,
+            class: "team-logo"
+        });
+
+        const teamName = this.#createElement("div",{
+            class: "team-name",
+        }, pseudo_player);
+
+        return this.#createElement("div", {
+            class: "team ${teamSide}"
+        }, teamImg, teamName);
+
+    }
+
+    #createMatchInfo(score, win)
+    {
+        const scoreDiv = this.#createElement("div", {
+            class: "score",
+        }, score);
+
+        const timeDiv = this.#createElement("div",{
+            class: win ? "win-match press-start-2p-regular" : "loose-match press-start-2p-regular"
+        }, win ? "WIN" : "LOOSE");
+
+        return this.#createElement("div", {
+            class: "match-info silkscreen-regular"
+        }, scoreDiv, timeDiv);
+    }
     toggleScoreStore(id)
     {
         if (document.getElementById("ldb_info_" + id).style.marginTop == "90px") {
@@ -56,54 +88,9 @@ class Leaderboard {
     addMatch(pseudo_playerA, pseudo_playerB, image_playerA, image_playerB, score, win, blockchain, ether_link)
     {
 
-        const teamLeftImg = this.#createElement("img", {
-            src: image_playerA,
-            alt: pseudo_playerA,
-            class: "team-logo"
-        });
-
-        const teamLeftName = this.#createElement("div",{
-            class: "team-name",
-        }, pseudo_playerA);
-
-        const teamLeftDiv = this.#createElement("div", {
-            class: "team team-left"
-        }, teamLeftImg, teamLeftName);
-
-        const scoreDiv = this.#createElement("div", {
-            class: "score",
-        }, score);
-
-        const timeDiv = document.createElement("div");
-        if (win)
-        {
-          timeDiv.className = "win-match press-start-2p-regular";
-          timeDiv.textContent = "WIN";
-        }
-        else
-        {
-          timeDiv.className = "loose-match press-start-2p-regular";
-          timeDiv.textContent = "LOOSE";
-        }
-
-        const matchInfoDiv = this.#createElement("div", {
-            class: "match-info silkscreen-regular"
-        }, scoreDiv, timeDiv);
-
-        const teamRightImg = this.#createElement("img", {
-            src: image_playerB,
-            alt: pseudo_playerB,
-            class: "team-logo"
-        })
-
-        const teamRightName = this.#createElement("div", {
-            class: "team-name",
-        }, pseudo_playerB);
-
-        const teamRightDiv = this.#createElement("div", {
-            class: "team team-right"
-        }, teamRightImg, teamRightName);
-
+        const teamLeftDiv = this.#createTeamDiv(image_playerA, pseudo_playerA, "team-left")
+        const teamRightDiv = this.#createTeamDiv(image_playerB, pseudo_playerB, "team-right")
+        const matchInfoDiv = this.#createMatchInfo(score, win)
         const matchModuleDiv = this.#createElement("div", {
             class: "match-module",
             id: "ldb_matchbox_"+this.#id,
