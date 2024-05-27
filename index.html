@@ -23,135 +23,140 @@ class Leaderboard {
     this.#id = 0;
   }
 
-  addMatch(pseudo_playerA, pseudo_playerB, image_playerA, image_playerB, score, win, blockchain, ether_link)
-  {
-
-    const matchDiv = document.createElement("div");
-    matchDiv.className = "match animation-info unselectable";
-    matchDiv.id = "ldb_match_"+this.#id;
-
-    const matchModuleDiv = document.createElement("div");
-    matchModuleDiv.className = "match-module";
-    matchModuleDiv.id = "ldb_matchbox_"+this.#id;
-    matchModuleDiv.setAttribute("onclick", "leaderboard.toggleScoreStore('"+this.#id+"')");
-
-    const teamLeftDiv = document.createElement("div");
-    teamLeftDiv.className = "team team-left";
-
-    const teamLeftImg = document.createElement("img");
-    teamLeftImg.src = image_playerA;
-    teamLeftImg.alt = pseudo_playerA;
-    teamLeftImg.className = "team-logo";
-
-    const teamLeftName = document.createElement("div");
-    teamLeftName.className = "team-name";
-    teamLeftName.textContent = pseudo_playerA;
-
-    teamLeftDiv.appendChild(teamLeftImg);
-    teamLeftDiv.appendChild(teamLeftName);
-
-    const matchInfoDiv = document.createElement("div");
-    matchInfoDiv.className = "match-info silkscreen-regular";
-
-    const scoreDiv = document.createElement("div");
-    scoreDiv.className = "score";
-    scoreDiv.textContent = score;
-
-    const timeDiv = document.createElement("div");
-    if (win)
+    #createElement(tag, attributes = {}, ...children)
     {
-      timeDiv.className = "win-match press-start-2p-regular";
-      timeDiv.textContent = "WIN";
-    }
-    else
-    {
-      timeDiv.className = "loose-match press-start-2p-regular";
-      timeDiv.textContent = "LOOSE";
+        const element = document.createElement(tag);
+
+        for(const [key, value] of Object.entries(attributes))
+                element.setAttribute(key, value);
+
+        for(const child of children)
+            if(typeof child === 'string')
+                element.appendChild(document.createTextNode(child));
+            else
+                element.appendChild(child);
+
+        return element;
     }
 
-    matchInfoDiv.appendChild(scoreDiv);
-    matchInfoDiv.appendChild(timeDiv);
-
-    const teamRightDiv = document.createElement("div");
-    teamRightDiv.className = "team team-right";
-
-    const teamRightImg = document.createElement("img");
-    teamRightImg.src = image_playerB;
-    teamRightImg.alt = pseudo_playerB;
-    teamRightImg.className = "team-logo";
-
-    const teamRightName = document.createElement("div");
-    teamRightName.className = "team-name";
-    teamRightName.textContent = pseudo_playerB;
-
-    teamRightDiv.appendChild(teamRightImg);
-    teamRightDiv.appendChild(teamRightName);
-
-    matchModuleDiv.appendChild(teamLeftDiv);
-    matchModuleDiv.appendChild(matchInfoDiv);
-    matchModuleDiv.appendChild(teamRightDiv);
-
-    matchDiv.appendChild(matchModuleDiv);
-
-    const logoMainDiv = document.createElement("div");
-    logoMainDiv.className = "logo-main animation-info";
-    logoMainDiv.id = "ldb_info_"+this.#id;
-
-    const logoBoxDiv = document.createElement("a");
-    logoBoxDiv.className = "logo-box";
-
-    const stored = document.createElement("span");
-    stored.innerHTML = " Match in";
-    stored.className = "logo-text";
-
-    const ethLogoImg = document.createElement("img");
-    if (blockchain)
+    toggleScoreStore(id)
     {
-      logoBoxDiv.className += " clickable-logo";
-      logoBoxDiv.href = ether_link;
-      ethLogoImg.src = "Ethereum%20Icon.svg";
-      ethLogoImg.alt = "Etherum logo";
-      ethLogoImg.className = "eth-logo";
-    }
-    else
-    {
-      ethLogoImg.src = "database2.svg";
-      ethLogoImg.alt = "Databse logo";
-      ethLogoImg.className = "db-logo";
+        if (document.getElementById("ldb_info_" + id).style.marginTop == "90px") {
+            document.getElementById("ldb_matchbox_" + id).style.background = "";
+            document.getElementById("ldb_match_" + id).style.height = "94px";
+            document.getElementById("ldb_info_" + id).style.marginTop = "60px";
+        }
+        else {
+            document.getElementById("ldb_matchbox_" + id).style.background = "#222223";
+            document.getElementById("ldb_match_" + id).style.height = "124px";
+            document.getElementById("ldb_info_" + id).style.marginTop = "90px";
+        }
     }
 
-    const logoDiv = document.createElement("div");
-    logoDiv.className = "logo";
-
-    logoBoxDiv.appendChild(stored);
-    logoBoxDiv.appendChild(ethLogoImg);
-    logoBoxDiv.appendChild(logoDiv);
-
-
-    logoMainDiv.appendChild(logoBoxDiv);
-
-    matchDiv.appendChild(logoMainDiv);
-
-    document.getElementById("leaderboard_list").appendChild(matchDiv);
-    this.#id += 1;
-  }
-
-  toggleScoreStore(id)
-  {
-    if (document.getElementById("ldb_info_"+id).style.marginTop == "90px")
+    addMatch(pseudo_playerA, pseudo_playerB, image_playerA, image_playerB, score, win, blockchain, ether_link)
     {
-      document.getElementById("ldb_matchbox_"+id).style.background = "";
-      document.getElementById("ldb_match_"+id).style.height = "94px"; 
-      document.getElementById("ldb_info_"+id).style.marginTop = "60px"; 
-    }
-    else
-    {
-      document.getElementById("ldb_matchbox_"+id).style.background = "#222223";
-      document.getElementById("ldb_match_"+id).style.height = "124px"; 
-      document.getElementById("ldb_info_"+id).style.marginTop = "90px"; 
-    }
-  }
 
+        const teamLeftImg = this.#createElement("img", {
+            src: image_playerA,
+            alt: pseudo_playerA,
+            class: "team-logo"
+        });
+
+        const teamLeftName = this.#createElement("div",{
+            class: "team-name",
+        }, pseudo_playerA);
+
+        const teamLeftDiv = this.#createElement("div", {
+            class: "team team-left"
+        }, teamLeftImg, teamLeftName);
+
+        const scoreDiv = this.#createElement("div", {
+            class: "score",
+        }, score);
+
+        const timeDiv = document.createElement("div");
+        if (win)
+        {
+          timeDiv.className = "win-match press-start-2p-regular";
+          timeDiv.textContent = "WIN";
+        }
+        else
+        {
+          timeDiv.className = "loose-match press-start-2p-regular";
+          timeDiv.textContent = "LOOSE";
+        }
+
+        const matchInfoDiv = this.#createElement("div", {
+            class: "match-info silkscreen-regular"
+        }, scoreDiv, timeDiv);
+
+        const teamRightImg = this.#createElement("img", {
+            src: image_playerB,
+            alt: pseudo_playerB,
+            class: "team-logo"
+        })
+
+        const teamRightName = this.#createElement("div", {
+            class: "team-name",
+        }, pseudo_playerB);
+
+        const teamRightDiv = this.#createElement("div", {
+            class: "team team-right"
+        }, teamRightImg, teamRightName);
+
+        const matchModuleDiv = this.#createElement("div", {
+            class: "match-module",
+            id: "ldb_matchbox_"+this.#id,
+            onclick: "leaderboard.toggleScoreStore('"+this.#id+"')"
+        }, teamLeftDiv, matchInfoDiv, teamRightDiv)
+
+        const logoBoxDiv = this.#createElement("a",{
+            class: "logo-box"
+        });
+
+        const stored = this.#createElement("span", {
+            class: "logo-text"
+        }, " Match in");
+
+        let ethLogoAttributes;
+        if (blockchain)
+        {
+          logoBoxDiv.className += " clickable-logo";
+          logoBoxDiv.href = ether_link;
+          ethLogoAttributes = {
+              src: "Ethereum%20Icon.svg",
+              alt: "Etherum logo",
+              class: "eth-logo"
+          }
+        }
+        else
+            ethLogoAttributes = {
+              src: "database2.svg",
+              alt: "Databse logo",
+              class: "db-logo"
+          }
+        const ethLogoImg = this.#createElement("img", ethLogoAttributes);
+        const logoDiv = this.#createElement("div", {
+            class: "logo"
+        });
+
+        logoBoxDiv.appendChild(stored);
+        logoBoxDiv.appendChild(ethLogoImg);
+        logoBoxDiv.appendChild(logoDiv);
+
+        const logoMainDiv = this.#createElement("div", {
+            class: "logo-main animation-info",
+            id: "ldb_info_"+this.#id
+        }, logoBoxDiv);
+
+        const matchDiv = this.#createElement("div", {
+            class: "match animation-info unselectable",
+            id: "ldb_match_"+this.#id
+        }, matchModuleDiv, logoMainDiv);
+
+        document.getElementById("leaderboard_list").appendChild(matchDiv);
+        this.#id += 1;
+    }
 }
 
 let leaderboard = new Leaderboard();
