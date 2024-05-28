@@ -52,7 +52,7 @@ class Leaderboard {
         }, pseudo_player);
 
         return this.#createElement("div", {
-            class: "team ${teamSide}"
+            class: "team " + teamSide
         }, teamImg, teamName);
 
     }
@@ -71,6 +71,48 @@ class Leaderboard {
             class: "match-info silkscreen-regular"
         }, scoreDiv, timeDiv);
     }
+
+    #createMatchModule(image_playerA, pseudo_playerA, image_playerB, pseudo_playerB, score, win) {
+        const teamLeftDiv = this.#createTeamDiv(image_playerA, pseudo_playerA, "team-left");
+        const teamRightDiv = this.#createTeamDiv(image_playerB, pseudo_playerB, "team-right");
+        const matchInfoDiv = this.#createMatchInfo(score, win);
+
+        return this.#createElement("div", {
+            class: "match-module",
+            id: "ldb_matchbox_"+this.#id,
+            onclick: "leaderboard.toggleScoreStore('"+this.#id+"')"
+        }, teamLeftDiv, matchInfoDiv, teamRightDiv);
+    }
+
+    #createLogoDiv(blockchain, ether_link) {
+        const stored = this.#createElement("span", {
+            class: "logo-text"
+        }, " Match in");
+
+        const ethLogoImg = this.#createElement("img", {
+            src: blockchain ? "Ethereum%20Icon.svg" : "database2.svg",
+            alt: blockchain ? "Etherum logo" : "Databse logo",
+            class: blockchain ? "eth-logo" : "db-logo"
+        });
+
+        const logoDiv = this.#createElement("div", {
+            class: "logo"
+        });
+
+        const logoBoxDiv = this.#createElement("a",{
+            class: "logo-box",
+            ...(blockchain && {
+                class: "logo-box clickable-logo",
+                href: ether_link
+            })
+        }, stored, ethLogoImg, logoDiv);
+
+        return this.#createElement("div", {
+            class: "logo-main animation-info",
+            id: "ldb_info_"+this.#id
+        }, logoBoxDiv);
+    }
+
     toggleScoreStore(id)
     {
         if (document.getElementById("ldb_info_" + id).style.marginTop == "90px") {
@@ -87,55 +129,8 @@ class Leaderboard {
 
     addMatch(pseudo_playerA, pseudo_playerB, image_playerA, image_playerB, score, win, blockchain, ether_link)
     {
-
-        const teamLeftDiv = this.#createTeamDiv(image_playerA, pseudo_playerA, "team-left")
-        const teamRightDiv = this.#createTeamDiv(image_playerB, pseudo_playerB, "team-right")
-        const matchInfoDiv = this.#createMatchInfo(score, win)
-        const matchModuleDiv = this.#createElement("div", {
-            class: "match-module",
-            id: "ldb_matchbox_"+this.#id,
-            onclick: "leaderboard.toggleScoreStore('"+this.#id+"')"
-        }, teamLeftDiv, matchInfoDiv, teamRightDiv)
-
-        const logoBoxDiv = this.#createElement("a",{
-            class: "logo-box"
-        });
-
-        const stored = this.#createElement("span", {
-            class: "logo-text"
-        }, " Match in");
-
-        let ethLogoAttributes;
-        if (blockchain)
-        {
-          logoBoxDiv.className += " clickable-logo";
-          logoBoxDiv.href = ether_link;
-          ethLogoAttributes = {
-              src: "Ethereum%20Icon.svg",
-              alt: "Etherum logo",
-              class: "eth-logo"
-          }
-        }
-        else
-            ethLogoAttributes = {
-              src: "database2.svg",
-              alt: "Databse logo",
-              class: "db-logo"
-          }
-        const ethLogoImg = this.#createElement("img", ethLogoAttributes);
-        const logoDiv = this.#createElement("div", {
-            class: "logo"
-        });
-
-        logoBoxDiv.appendChild(stored);
-        logoBoxDiv.appendChild(ethLogoImg);
-        logoBoxDiv.appendChild(logoDiv);
-
-        const logoMainDiv = this.#createElement("div", {
-            class: "logo-main animation-info",
-            id: "ldb_info_"+this.#id
-        }, logoBoxDiv);
-
+        const matchModuleDiv = this.#createMatchModule(image_playerA, pseudo_playerA, image_playerB, pseudo_playerB, score, win)
+        const logoMainDiv = this.#createLogoDiv(blockchain, ether_link)
         const matchDiv = this.#createElement("div", {
             class: "match animation-info unselectable",
             id: "ldb_match_"+this.#id
