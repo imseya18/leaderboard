@@ -1,166 +1,198 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
-    <title>Match Module</title>
-    <link rel="stylesheet" href="./css/style.css">
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+		<title>Match Module</title>
+		<link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
-  <div class="leaderboard-list" id="leaderboard_list">
+<div class="leaderboard-list" id="leaderboard_list">
+		<div class="match animation-info unselectable" id="ldb_match_0">
+	 <div class="match-module" id="ldb_matchbox_0">
+			<div class="team team-left">
+				 <img src="mmorue.jpg" alt="Mathieu" class="team-logo">
+				 <div class="team-name">Mathieu</div>
+			</div>
+			<div class="match-info silkscreen-regular">
+				 <div class="score">10-4</div>
+				 <div class="win-match press-start-2p-regular">WIN</div>
+			</div>
+			<div class="team team-right">
+				 <img src="loculy.jpg" alt="Louis" class="team-logo">
+				 <div class="team-name">Louis</div>
+			</div>
+	 </div>
+	 <div class="logo-main animation-info" id="ldb_info_0" onclick="leaderboard.toggleScoreStore('0')">
+			<div class="logo-box-main">
+				<a class="logo-box clickable-logo bck-hover" href="https://google.com" target="_blank">
+					 <span class="logo-text"> Stored in </span><img src="Ethereum%20Icon.svg" alt="Etherum logo" class="eth-logo">
+					 <div class="logo"></div>
+				</a>
+				<div class="arrow-main bck-hover unselectable">
+					<img src="arrow.svg" alt="Arrow down" class="arrow-logo animation-arrow unselectable" id="ldb_arrow_0">
+				</div>
+			</div>
+	 </div>
+</div>
 
-  </div>
+	</div>
 </body>
 
 <script type="text/javascript">
 class Leaderboard {
-  #id;
+	#id;
 
-  constructor()
-  {
-    this.#id = 0;
-  }
+	constructor()
+	{
+		this.#id = 0;
+	}
 
-  addMatch(pseudo_playerA, pseudo_playerB, image_playerA, image_playerB, score, win, blockchain, ether_link)
-  {
+	addMatch(pseudo_playerA, pseudo_playerB, image_playerA, image_playerB, score, win, blockchain, ether_link)
+	{
 
-    const matchDiv = document.createElement("div");
-    matchDiv.className = "match animation-info unselectable";
-    matchDiv.id = "ldb_match_"+this.#id;
+		const matchDiv = document.createElement("div");
+		matchDiv.className = "match animation-info unselectable";
+		matchDiv.id = "ldb_match_"+this.#id;
 
-    const matchModuleDiv = document.createElement("div");
-    matchModuleDiv.className = "match-module";
-    matchModuleDiv.id = "ldb_matchbox_"+this.#id;
-    matchModuleDiv.setAttribute("onclick", "leaderboard.toggleScoreStore('"+this.#id+"')");
+		const matchModuleDiv = document.createElement("div");
+		matchModuleDiv.className = "match-module";
+		matchModuleDiv.id = "ldb_matchbox_"+this.#id;
+		matchModuleDiv.setAttribute("onclick", "leaderboard.toggleScoreStore('"+this.#id+"')");
 
-    const teamLeftDiv = document.createElement("div");
-    teamLeftDiv.className = "team team-left";
+		const teamLeftDiv = document.createElement("div");
+		teamLeftDiv.className = "team team-left";
 
-    const teamLeftImg = document.createElement("img");
-    teamLeftImg.src = image_playerA;
-    teamLeftImg.alt = pseudo_playerA;
-    teamLeftImg.className = "team-logo";
+		const teamLeftImg = document.createElement("img");
+		teamLeftImg.src = image_playerA;
+		teamLeftImg.alt = pseudo_playerA;
+		teamLeftImg.className = "team-logo";
 
-    const teamLeftName = document.createElement("div");
-    teamLeftName.className = "team-name";
-    teamLeftName.textContent = pseudo_playerA;
+		const teamLeftName = document.createElement("div");
+		teamLeftName.className = "team-name";
+		teamLeftName.textContent = pseudo_playerA;
 
-    teamLeftDiv.appendChild(teamLeftImg);
-    teamLeftDiv.appendChild(teamLeftName);
+		teamLeftDiv.appendChild(teamLeftImg);
+		teamLeftDiv.appendChild(teamLeftName);
 
-    const matchInfoDiv = document.createElement("div");
-    matchInfoDiv.className = "match-info silkscreen-regular";
+		const matchInfoDiv = document.createElement("div");
+		matchInfoDiv.className = "match-info silkscreen-regular";
 
-    const scoreDiv = document.createElement("div");
-    scoreDiv.className = "score";
-    scoreDiv.textContent = score;
+		const scoreDiv = document.createElement("div");
+		scoreDiv.className = "score";
+		scoreDiv.textContent = score;
 
-    const timeDiv = document.createElement("div");
-    if (win)
-    {
-      timeDiv.className = "win-match press-start-2p-regular";
-      timeDiv.textContent = "WIN";
-    }
-    else
-    {
-      timeDiv.className = "loose-match press-start-2p-regular";
-      timeDiv.textContent = "LOOSE";
-    }
+		const timeDiv = document.createElement("div");
+		if (win)
+		{
+			timeDiv.className = "win-match press-start-2p-regular";
+			timeDiv.textContent = "WIN";
+		}
+		else
+		{
+			timeDiv.className = "loose-match press-start-2p-regular";
+			timeDiv.textContent = "LOOSE";
+		}
 
-    matchInfoDiv.appendChild(scoreDiv);
-    matchInfoDiv.appendChild(timeDiv);
+		matchInfoDiv.appendChild(scoreDiv);
+		matchInfoDiv.appendChild(timeDiv);
 
-    const teamRightDiv = document.createElement("div");
-    teamRightDiv.className = "team team-right";
+		const teamRightDiv = document.createElement("div");
+		teamRightDiv.className = "team team-right";
 
-    const teamRightImg = document.createElement("img");
-    teamRightImg.src = image_playerB;
-    teamRightImg.alt = pseudo_playerB;
-    teamRightImg.className = "team-logo";
+		const teamRightImg = document.createElement("img");
+		teamRightImg.src = image_playerB;
+		teamRightImg.alt = pseudo_playerB;
+		teamRightImg.className = "team-logo";
 
-    const teamRightName = document.createElement("div");
-    teamRightName.className = "team-name";
-    teamRightName.textContent = pseudo_playerB;
+		const teamRightName = document.createElement("div");
+		teamRightName.className = "team-name";
+		teamRightName.textContent = pseudo_playerB;
 
-    teamRightDiv.appendChild(teamRightImg);
-    teamRightDiv.appendChild(teamRightName);
+		teamRightDiv.appendChild(teamRightImg);
+		teamRightDiv.appendChild(teamRightName);
 
-    matchModuleDiv.appendChild(teamLeftDiv);
-    matchModuleDiv.appendChild(matchInfoDiv);
-    matchModuleDiv.appendChild(teamRightDiv);
+		matchModuleDiv.appendChild(teamLeftDiv);
+		matchModuleDiv.appendChild(matchInfoDiv);
+		matchModuleDiv.appendChild(teamRightDiv);
 
-    matchDiv.appendChild(matchModuleDiv);
+		matchDiv.appendChild(matchModuleDiv);
 
-    const logoMainDiv = document.createElement("div");
-    logoMainDiv.className = "logo-main animation-info";
-    logoMainDiv.id = "ldb_info_"+this.#id;
+		const logoMainDiv = document.createElement("div");
+		logoMainDiv.className = "logo-main animation-info";
+		logoMainDiv.id = "ldb_info_"+this.#id;
 
-    const logoBoxDiv = document.createElement("a");
-    logoBoxDiv.className = "logo-box";
+		const logoBoxDiv = document.createElement("a");
+		logoBoxDiv.className = "logo-box";
 
-    const stored = document.createElement("span");
-    stored.innerHTML = " Match in";
-    stored.className = "logo-text";
+		const stored = document.createElement("span");
+		stored.innerHTML = " Match in";
+		stored.className = "logo-text";
 
-    const ethLogoImg = document.createElement("img");
-    if (blockchain)
-    {
-      logoBoxDiv.className += " clickable-logo";
-      logoBoxDiv.href = ether_link;
-      ethLogoImg.src = "Ethereum%20Icon.svg";
-      ethLogoImg.alt = "Etherum logo";
-      ethLogoImg.className = "eth-logo";
-    }
-    else
-    {
-      ethLogoImg.src = "database2.svg";
-      ethLogoImg.alt = "Databse logo";
-      ethLogoImg.className = "db-logo";
-    }
+		const ethLogoImg = document.createElement("img");
+		if (blockchain)
+		{
+			logoBoxDiv.className += " clickable-logo";
+			logoBoxDiv.href = ether_link;
+			ethLogoImg.src = "Ethereum%20Icon.svg";
+			ethLogoImg.alt = "Etherum logo";
+			ethLogoImg.className = "eth-logo";
+		}
+		else
+		{
+			ethLogoImg.src = "database2.svg";
+			ethLogoImg.alt = "Databse logo";
+			ethLogoImg.className = "db-logo";
+		}
 
-    const logoDiv = document.createElement("div");
-    logoDiv.className = "logo";
+		const logoDiv = document.createElement("div");
+		logoDiv.className = "logo";
 
-    logoBoxDiv.appendChild(stored);
-    logoBoxDiv.appendChild(ethLogoImg);
-    logoBoxDiv.appendChild(logoDiv);
+		logoBoxDiv.appendChild(stored);
+		logoBoxDiv.appendChild(ethLogoImg);
+		logoBoxDiv.appendChild(logoDiv);
 
 
-    logoMainDiv.appendChild(logoBoxDiv);
+		logoMainDiv.appendChild(logoBoxDiv);
 
-    matchDiv.appendChild(logoMainDiv);
+		matchDiv.appendChild(logoMainDiv);
 
-    document.getElementById("leaderboard_list").appendChild(matchDiv);
-    this.#id += 1;
-  }
+		document.getElementById("leaderboard_list").appendChild(matchDiv);
+		this.#id += 1;
+	}
 
-  toggleScoreStore(id)
-  {
-    if (document.getElementById("ldb_info_"+id).style.marginTop == "90px")
-    {
-      document.getElementById("ldb_matchbox_"+id).style.background = "";
-      document.getElementById("ldb_match_"+id).style.height = "94px"; 
-      document.getElementById("ldb_info_"+id).style.marginTop = "60px"; 
-    }
-    else
-    {
-      document.getElementById("ldb_matchbox_"+id).style.background = "#222223";
-      document.getElementById("ldb_match_"+id).style.height = "124px"; 
-      document.getElementById("ldb_info_"+id).style.marginTop = "90px"; 
-    }
-  }
+	toggleScoreStore(id)
+	{
+		if (document.getElementById("ldb_info_"+id).style.marginTop == "90px")
+		{
+			document.getElementById("ldb_arrow_"+id).style.transform = "rotateZ(0deg)";
+			document.getElementById("ldb_matchbox_"+id).style.background = "";
+			document.getElementById("ldb_match_"+id).style.height = "94px"; 
+			document.getElementById("ldb_info_"+id).style.marginTop = "55px"; 
+		}
+		else
+		{
+			document.getElementById("ldb_arrow_"+id).style.transform = "rotateZ(180deg)";
+			document.getElementById("ldb_matchbox_"+id).style.background = "#222223";
+			document.getElementById("ldb_match_"+id).style.height = "124px"; 
+			document.getElementById("ldb_info_"+id).style.marginTop = "90px"; 
+		}
+	}
 
 }
 
 let leaderboard = new Leaderboard();
+/*
 leaderboard.addMatch("Mathieu", "Louis", "mmorue.jpg", "loculy.jpg", "10-4", true, true, "");
-leaderboard.addMatch("Mathieu", "Louis", "mmorue.jpg", "loculy.jpg", "4-10", false,true,  "");
+leaderboard.addMatch("Mathieu", "Louis", "mmorue.jpg", "loculy.jpg", "4-10", false,true,	"");
 leaderboard.addMatch("Mathieu", "Louis", "mmorue.jpg", "loculy.jpg", "10-8", true, false, "");
 leaderboard.addMatch("Mathieu", "Louis", "mmorue.jpg", "loculy.jpg", "10-6", true, true, "");
 leaderboard.addMatch("Mathieu", "Louis", "mmorue.jpg", "loculy.jpg", "5-10", false, true, "");
 leaderboard.addMatch("Mathieu", "Louis", "mmorue.jpg", "loculy.jpg", "10-2", true, true, "");
+*/
 </script>
 
 </html>
