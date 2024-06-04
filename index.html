@@ -42,7 +42,7 @@ class Leaderboard {
     #createTeamDiv(image_player, pseudo_player, teamSide)
     {
         const teamImg = this.#createElement("img", {
-            src: image_player,
+            src: "." + image_player,
             alt: pseudo_player,
             class: "team-logo"
         });
@@ -151,7 +151,7 @@ fetch("http://localhost:8000/front/history/13")
                 {
                     score = data["player1_score"] + " - " + data["player2_score"]
                     eth_link = "https://sepolia.etherscan.io/tx/" + data["tx_hash"]
-                    leaderboard.addMatch(data["player1_id"], data["player2_id"], data["player1_img"], data["player2_img"], score, true, data["from_blockchain"], eth_link)
+                    leaderboard.addMatch(data["player1_id"], data["player2_id"], data["player1_img"], data["player2_img"], score, data["win"], data["from_blockchain"], eth_link)
                 }
             })
         else
