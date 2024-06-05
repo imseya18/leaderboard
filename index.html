@@ -1,17 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
-    <title>Match Module</title>
-    <link rel="stylesheet" href="./css/style.css">
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+		<title>Match Module</title>
+		<link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
-  <div class="leaderboard-list" id="leaderboard_list">
+<div class="leaderboard-list" id="leaderboard_list">
 
-  </div>
+</div>
+
+	</div>
 </body>
 
 <script type="text/javascript">
@@ -79,53 +82,75 @@ class Leaderboard {
 
         return this.#createElement("div", {
             class: "match-module",
-            id: "ldb_matchbox_"+this.#id,
-            onclick: "leaderboard.toggleScoreStore('"+this.#id+"')"
+            id: "ldb_matchbox_"+this.#id
         }, teamLeftDiv, matchInfoDiv, teamRightDiv);
     }
 
-    #createLogoDiv(blockchain, ether_link) {
-        const stored = this.#createElement("span", {
-            class: "logo-text"
-        }, " Match in");
+	#createLogoDiv(blockchain, ether_link, arrow_id) {
+    // Modification du texte
+    const stored = this.#createElement("span", {
+        class: "logo-text"
+    }, "Stored in");
 
-        const ethLogoImg = this.#createElement("img", {
-            src: blockchain ? "Ethereum%20Icon.svg" : "database2.svg",
-            alt: blockchain ? "Etherum logo" : "Databse logo",
-            class: blockchain ? "eth-logo" : "db-logo"
-        });
+    // Ajout du logo Ethereum
+    const ethLogoImg = this.#createElement("img", {
+        src: "Ethereum%20Icon.svg",
+        alt: "Etherum logo",
+        class: "eth-logo"
+    });
 
-        const logoDiv = this.#createElement("div", {
-            class: "logo"
-        });
+    // Création du div logo vide
+    const logoDiv = this.#createElement("div", {
+        class: "logo"
+    });
 
-        const logoBoxDiv = this.#createElement("a",{
-            class: "logo-box",
-            ...(blockchain && {
-                class: "logo-box clickable-logo",
-                href: ether_link
-            })
-        }, stored, ethLogoImg, logoDiv);
+    // Création du lien avec les classes et href appropriés
+    const logoBoxDiv = this.#createElement("a", {
+        class: "logo-box clickable-logo bck-hover",
+        href: ether_link,
+        target: "_blank"
+    }, stored, ethLogoImg, logoDiv);
 
-        return this.#createElement("div", {
+    // Ajout d'une flèche avec un identifiant dynamique
+    const arrowImg = this.#createElement("img", {
+        src: "arrow.svg",
+        alt: "Arrow down",
+        class: "arrow-logo animation-arrow unselectable",
+        id: "ldb_arrow_"+this.#id
+    });
+
+    const arrowDiv = this.#createElement("div", {
+        class: "arrow-main bck-hover unselectable"
+    }, arrowImg);
+
+    // Retour du div principal contenant tous les éléments
+    const logoBoxMainDiv =  this.#createElement("div", {
+        class: "logo-box-main"
+    }, logoBoxDiv, arrowDiv);
+
+	return this.#createElement("div", {
             class: "logo-main animation-info",
-            id: "ldb_info_"+this.#id
-        }, logoBoxDiv);
-    }
-
+            id: "ldb_info_"+this.#id,
+            onclick: "leaderboard.toggleScoreStore('"+this.#id+"')"
+        }, logoBoxMainDiv);
+}
     toggleScoreStore(id)
-    {
-        if (document.getElementById("ldb_info_" + id).style.marginTop == "90px") {
-            document.getElementById("ldb_matchbox_" + id).style.background = "";
-            document.getElementById("ldb_match_" + id).style.height = "94px";
-            document.getElementById("ldb_info_" + id).style.marginTop = "60px";
-        }
-        else {
-            document.getElementById("ldb_matchbox_" + id).style.background = "#222223";
-            document.getElementById("ldb_match_" + id).style.height = "124px";
-            document.getElementById("ldb_info_" + id).style.marginTop = "90px";
-        }
-    }
+	{
+		if (document.getElementById("ldb_info_"+id).style.marginTop == "90px")
+		{
+			document.getElementById("ldb_arrow_"+id).style.transform = "rotateZ(0deg)";
+			document.getElementById("ldb_matchbox_"+id).style.background = "";
+			document.getElementById("ldb_match_"+id).style.height = "108px";
+			document.getElementById("ldb_info_"+id).style.marginTop = "55px";
+		}
+		else
+		{
+			document.getElementById("ldb_arrow_"+id).style.transform = "rotateZ(180deg)";
+			document.getElementById("ldb_matchbox_"+id).style.background = "#222223";
+			document.getElementById("ldb_match_"+id).style.height = "142px";
+			document.getElementById("ldb_info_"+id).style.marginTop = "90px";
+		}
+	}
 
     addMatch(pseudo_playerA, pseudo_playerB, image_playerA, image_playerB, score, win, blockchain, ether_link)
     {
@@ -143,7 +168,7 @@ class Leaderboard {
 
 let leaderboard = new Leaderboard();
 
-fetch("http://localhost:8000/front/history/13")
+fetch("http://k1r4p5:8000/front/history/13")
 	.then((reponse) => {
         if(reponse.ok)
 		    reponse.json().then((datas) => {
