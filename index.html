@@ -10,11 +10,28 @@
 		<link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
-<div class="leaderboard-list" id="leaderboard_list">
-
-</div>
-
+<div class="main">
+	<div class="profil" id="profil">
+		<img class="profil-logo" src="./mmorue.jpg" alt="profil-picture" id="Profil-picture">
+		<p>PLAYER-NAME</p>
+		<div class="padding-top-17">
+			<div class="score-profil">
+				<p class="silkscreen-regular win-match margin-15px-right margin-top-bot">WIN:</p>
+				<p class="silkscreen-regular margin-top-bot">257</p>
+			</div>
+			<div class="score-profil">
+				<p class="silkscreen-regular loose-match margin-15px-right margin-top-bot">LOOSE:</p>
+				<p class="silkscreen-regular margin-top-bot">27</p>
+			</div>
+			<div class="score-profil">
+				<p class="silkscreen-regular margin-15px-right margin-top-bot">RATIO:</p>
+				<p class="silkscreen-regular margin-top-bot">56% </p>
+			</div>
+		</div>
 	</div>
+	<div class="leaderboard-list" id="leaderboard_list">
+	</div>
+</div>
 </body>
 
 <script type="text/javascript">
@@ -60,25 +77,29 @@ class Leaderboard {
 
     }
 
-    #createMatchInfo(score, win)
+    #createMatchInfo(score, win, date)
     {
         const scoreDiv = this.#createElement("div", {
             class: "score",
         }, score);
 
-        const timeDiv = this.#createElement("div",{
+        const resultDiv = this.#createElement("div",{
             class: win ? "win-match press-start-2p-regular" : "loose-match press-start-2p-regular"
         }, win ? "WIN" : "LOOSE");
 
+		const dateDiv = this.#createElement("div",{
+			class: "date",
+		}, date);
+
         return this.#createElement("div", {
             class: "match-info silkscreen-regular"
-        }, scoreDiv, timeDiv);
+        }, dateDiv, scoreDiv, resultDiv);
     }
 
-    #createMatchModule(image_playerA, pseudo_playerA, image_playerB, pseudo_playerB, score, win) {
+    #createMatchModule(image_playerA, pseudo_playerA, image_playerB, pseudo_playerB, score, win, date) {
         const teamLeftDiv = this.#createTeamDiv(image_playerA, pseudo_playerA, "team-left");
         const teamRightDiv = this.#createTeamDiv(image_playerB, pseudo_playerB, "team-right");
-        const matchInfoDiv = this.#createMatchInfo(score, win);
+        const matchInfoDiv = this.#createMatchInfo(score, win, date);
 
         return this.#createElement("div", {
             class: "match-module",
@@ -86,7 +107,7 @@ class Leaderboard {
         }, teamLeftDiv, matchInfoDiv, teamRightDiv);
     }
 
-	#createLogoDiv(blockchain, ether_link, arrow_id) {
+	#createLogoDiv(blockchain, ether_link) {
     // Modification du texte
     const stored = this.#createElement("span", {
         class: "logo-text"
@@ -152,18 +173,27 @@ class Leaderboard {
 		}
 	}
 
-    addMatch(pseudo_playerA, pseudo_playerB, image_playerA, image_playerB, score, win, blockchain, ether_link)
+    addMatch(pseudo_playerA, pseudo_playerB, image_playerA, image_playerB, score, win, blockchain, ether_link, date)
     {
-        const matchModuleDiv = this.#createMatchModule(image_playerA, pseudo_playerA, image_playerB, pseudo_playerB, score, win)
+        const matchModuleDiv = this.#createMatchModule(image_playerA, pseudo_playerA, image_playerB, pseudo_playerB, score, win, date)
         const logoMainDiv = this.#createLogoDiv(blockchain, ether_link)
         const matchDiv = this.#createElement("div", {
             class: "match animation-info unselectable",
             id: "ldb_match_"+this.#id
         }, matchModuleDiv, logoMainDiv);
-
         document.getElementById("leaderboard_list").appendChild(matchDiv);
         this.#id += 1;
     }
+
+	NoMatchFound()
+	{
+		const NotFoundDiv = this.#createElement("div", {
+			class: "match-module no-match-found",
+			id: "ldb_match_"+this.#id
+		}, "NO MATCH FOUND")
+		document.getElementById("leaderboard_list").appendChild(NotFoundDiv);
+		this.#id += 1;
+	}
 }
 
 let leaderboard = new Leaderboard();
@@ -174,13 +204,17 @@ fetch("http://localhost:8000/front/history/13")
 		    reponse.json().then((datas) => {
                 for(const data of datas)
                 {
-                    score = data["player1_score"] + " - " + data["player2_score"]
-                    eth_link = "https://sepolia.etherscan.io/tx/" + data["tx_hash"]
-                    leaderboard.addMatch(data["player1_id"], data["player2_id"], data["player1_img"], data["player2_img"], score, data["win"], data["from_blockchain"], eth_link)
+                    const score = data["player1_score"] + " - " + data["player2_score"];
+                    const eth_link = "https://sepolia.etherscan.io/tx/" + data["tx_hash"];
+					const date = new Date(data["timestamp"])
+                    leaderboard.addMatch(data["player1_id"], data["player2_id"], data["player1_img"], data["player2_img"], score, data["win"], data["from_blockchain"], eth_link, date.toLocaleDateString());
                 }
             })
-        else
-            console.log("wrong request")
+		else
+		{
+			leaderboard.NoMatchFound()
+			console.log("probleme")
+		}
 	})
     .catch(() => {
         console.log("wrong API call")

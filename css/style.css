@@ -15,6 +15,48 @@ body {
 	user-select: none;
 }
 
+.main{
+	display: flex;
+	flex-direction: row;
+}
+
+.profil{
+	margin-top: 53px;
+	margin-right: 25px;
+	background-color: #1c1c1e;
+	border-radius: 15px;
+	height: 258px;
+	padding: 30px 40px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	color: #ffffff;
+	width: 100%;
+	box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.profil-logo{
+	border-radius: 50%;
+	width: 90px;
+	height: 90px;
+}
+
+.score-profil{
+	display: flex;
+	flex-direction: row;
+}
+
+.margin-15px-right{
+	margin-right: 10px;
+}
+
+.padding-top-17{
+	padding-top: 17px;
+}
+.margin-top-bot{
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
 .leaderboard-list{
 	display: flex;
 	flex-direction: column;
@@ -32,6 +74,9 @@ body {
 	transition: 0.2s all;
 }
 
+.date{
+	font-size: 10px;
+}
 
 .match{
 	display: flex;
@@ -47,7 +92,6 @@ body {
 
 .match-module {
 	height: 60px;
-
 	background-color: #1c1c1e;
 	border-radius: 15px;
 	padding: 15px 15px;
@@ -59,6 +103,14 @@ body {
 	justify-content: space-between;
 	box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 	z-index: 26;
+}
+
+.no-match-found {
+	max-width: 380px;
+	min-width: 210px;
+	justify-content: center;
+	font-family: "Montserrat", sans-serif;
+	font-weight: bold;
 }
 
 .team {
@@ -87,7 +139,6 @@ body {
 .eth-logo{
   width: 30px;
   height: 30px;
-
 }
 
 .arrow-logo {
@@ -175,7 +226,6 @@ body {
 	border-radius: 50%;
 	width: 30px;
 	height: 30px;
-	/*margin-right: 10px;*/
 }
 
 .team-name {
