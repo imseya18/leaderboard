@@ -14,24 +14,24 @@
 	<div class="profil" id="profil">
 		<div class="flex-row">
 			<div class="flex-column-profil padding-bot-17">
-				<img class="profil-logo" src="./mmorue.jpg" alt="profil-picture" id="Profil-picture">
+				<img class="profil-logo" src="" alt="profil-picture" id="Profil-picture">
 			</div>
 			<div class="padding-bot-17">
 			<div class="score-profil">
 				<p class="silkscreen-regular win-match margin-15px-right margin-top-bot">WIN:</p>
-				<p class="silkscreen-regular margin-top-bot">257</p>
+				<p class="silkscreen-regular margin-top-bot" id="win-number">257</p>
 			</div>
 			<div class="score-profil">
 				<p class="silkscreen-regular loose-match margin-15px-right margin-top-bot">LOOSE:</p>
-				<p class="silkscreen-regular margin-top-bot">27</p>
+				<p class="silkscreen-regular margin-top-bot" id="loose-number">27</p>
 			</div>
 			<div class="score-profil">
 				<p class="silkscreen-regular margin-15px-right margin-top-bot">RATIO:</p>
-				<p class="silkscreen-regular margin-top-bot">56% </p>
+				<p class="silkscreen-regular margin-top-bot" id="ratio-number">56% </p>
 			</div>
 		</div>
 		</div>
-		<p class="player-name">PLAYER-NAME</p>
+		<p class="player-name" id="player-name">PLAYER-NAME</p>
 	</div>
 	<div class="leaderboard-list" id="leaderboard_list">
 	</div>
@@ -198,6 +198,15 @@ class Leaderboard {
 		document.getElementById("leaderboard_list").appendChild(NotFoundDiv);
 		this.#id += 1;
 	}
+
+	createProfil()
+	{
+		document.getElementById("player-name").innerText = "OUIOUIOUI"
+		document.getElementById("win-number").innerText = "25"
+		document.getElementById("loose-number").innerText = "155"
+		document.getElementById("ratio-number").innerText = "56%"
+		document.getElementById("Profil-picture").src = "./mmorue.jpg"
+	}
 }
 
 let leaderboard = new Leaderboard();
@@ -213,6 +222,7 @@ fetch("http://localhost:8000/front/history/13")
 					const date = new Date(data["timestamp"])
                     leaderboard.addMatch(data["player1_id"], data["player2_id"], data["player1_img"], data["player2_img"], score, data["win"], data["from_blockchain"], eth_link, date.toLocaleDateString());
                 }
+				leaderboard.createProfil()
             })
 		else
 		{
