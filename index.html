@@ -199,13 +199,13 @@ class Leaderboard {
 		this.#id += 1;
 	}
 
-	createProfil()
+	createProfil(datas)
 	{
-		document.getElementById("player-name").innerText = "OUIOUIOUI"
-		document.getElementById("win-number").innerText = "25"
-		document.getElementById("loose-number").innerText = "155"
-		document.getElementById("ratio-number").innerText = "56%"
-		document.getElementById("Profil-picture").src = "./mmorue.jpg"
+		document.getElementById("player-name").innerText = datas["player_name"]
+		document.getElementById("win-number").innerText = datas["player_win"]
+		document.getElementById("loose-number").innerText = datas["player_loose"]
+		document.getElementById("ratio-number").innerText = datas["player_ratio"]
+		document.getElementById("Profil-picture").src = datas["player_picture"]
 	}
 }
 
@@ -215,14 +215,14 @@ fetch("http://localhost:8000/front/history/13")
 	.then((reponse) => {
         if(reponse.ok)
 		    reponse.json().then((datas) => {
-                for(const data of datas)
+                for(const data of datas["all_matchs"])
                 {
                     const score = data["player1_score"] + " - " + data["player2_score"];
                     const eth_link = "https://sepolia.etherscan.io/tx/" + data["tx_hash"];
 					const date = new Date(data["timestamp"])
                     leaderboard.addMatch(data["player1_id"], data["player2_id"], data["player1_img"], data["player2_img"], score, data["win"], data["from_blockchain"], eth_link, date.toLocaleDateString());
                 }
-				leaderboard.createProfil()
+				leaderboard.createProfil(datas)
             })
 		else
 		{
